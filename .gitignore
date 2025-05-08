@@ -12,7 +12,3 @@ __pycache__/
 # Ignore IDE/editor settings (optional but useful)
 .vscode/
 .idea/
-
-# Ignore system files (macOS, Windows)
-.DS_Store
-Thumbs.db

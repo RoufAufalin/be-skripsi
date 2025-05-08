@@ -49,6 +49,7 @@ class StudentProfile(BaseModel):
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Subject Recommendation API!"}
+# tambahkan endpoint untuk mendapatkan rekomendasi
 
 @app.post("/recommend/")
 def recommend(student: StudentProfile, top_n: int = 5):

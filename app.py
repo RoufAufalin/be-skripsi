@@ -10,18 +10,21 @@ from googleapiclient.discovery import build
 import json
 import os
 
-# SERVICE_ACCOUNT_FILE = 'service_acc.json'
+
+
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+
 
 # # Ambil isi credential dari environment variable
 service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
 credential = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
 
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
+#Ambil isi credential dari file JSON
+# SERVICE_ACCOUNT_FILE = 'service_acc.json'
 # credential = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
-SPREADSHEET_ID = '14Qy5WOXJQMuA-yN7wC424e8K8C5NW_w3OYmiaOL5HLaA'
+SPREADSHEET_ID = '14Qy5OXJQMuA-yN7wC424e8K8C5NW_w3OYmiaOL5HLaA'
 
 RANGE_NAME = 'Sheet1!A2'
 
@@ -59,6 +62,7 @@ def recommend_subjects(student_raw_profile, top_n=5):
     return df.head(top_n)
 
 class StudentProfile(BaseModel):
+    profile: list[str]
     akademik: list[int]
     keminatan: list[int]
     riasec: list[int]
@@ -98,8 +102,10 @@ def read_root():
 @app.post("/recommend/")
 def recommend(student: StudentProfile, top_n: int = 5):
     student_raw_profile = student.akademik + student.keminatan + student.riasec
-    recommendations = recommend_subjects(student_raw_profile, top_n)
+    recommendations_df = recommend_subjects(student_raw_profile, top_n)
+
+    recommendations = recommendations_df.to_dict(orient="records")
 
     save_to_sheet(student, recommendations)
 
-    return recommendations.to_dict(orient="records")
+    return recommendations

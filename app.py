@@ -72,7 +72,7 @@ def save_to_sheet(student: StudentProfile, recommendations: list[dict]):
         service = build('sheets', 'v4', credentials=credential)
         sheet = service.spreadsheets()
 
-        profile_data = student.akademik + student.keminatan + student.riasec
+        profile_data = student.profile + student.akademik + student.keminatan + student.riasec
         recommendation_data = [rec['Mata Pelajaran'] for rec in recommendations]
         
         data_row = profile_data + recommendation_data

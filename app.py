@@ -7,6 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from profile_mapel import mapel_profiles
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
+import json
+import os
 
 # SERVICE_ACCOUNT_FILE = 'service_acc.json'
 

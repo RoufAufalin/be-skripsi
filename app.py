@@ -8,11 +8,16 @@ from profile_mapel import mapel_profiles
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 
-SERVICE_ACCOUNT_FILE = 'service_acc.json'
+# SERVICE_ACCOUNT_FILE = 'service_acc.json'
+
+# # Ambil isi credential dari environment variable
+service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+credential = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-credential = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+# credential = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 SPREADSHEET_ID = '14Qy5WOXJQMuA-yN7wC424e8K8C5NW_w3OYmiaOL5HLaA'
 
